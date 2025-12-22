@@ -2,6 +2,7 @@ from textual.app import App, ComposeResult
 from textual.widgets import Placeholder
 
 from terminal93.screens.BootScreen import BootScreen
+from terminal93.widgets.window import Window
 
 
 class Terminal93(App):
@@ -13,7 +14,8 @@ class Terminal93(App):
     '''
 
     def compose(self) -> ComposeResult:
-        yield Placeholder('Hello, World!')
+        for _ in range(3):
+            yield Window(Placeholder('Hello, World!'))
 
     def on_mount(self) -> None:
         self.push_screen(BootScreen())
