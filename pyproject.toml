@@ -13,3 +13,8 @@ terminal93 = "terminal93.__main__:main"
 
 [tool.uv]
 package = true
+
+[dependency-groups]
+dev = [
+    "textual-dev>=1.8.0",
+]
