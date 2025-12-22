@@ -4,4 +4,12 @@ version = "0.1.0"
 description = "hug + hack = infinity"
 readme = "README.md"
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "textual>=6.11.0",
+]
+
+[project.scripts]
+terminal93 = "terminal93.__main__:main"
+
+[tool.uv]
+package = true
