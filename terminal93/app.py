@@ -19,7 +19,11 @@ class Terminal93(App):
         yield Static(id='background')
 
         for i in range(3):
-            yield Window(f'Window {i + 1}', Placeholder('Hello, World!'))
+            yield Window(
+                f'Window {i + 1}',
+                Placeholder('Hello, World!'),
+                position=(10 + i * 4, 5 + i * 2),
+            )
 
     def on_mount(self) -> None:
         self.push_screen(BootScreen())

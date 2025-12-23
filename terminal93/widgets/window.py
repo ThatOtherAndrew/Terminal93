@@ -112,11 +112,13 @@ class Window(Container):
     '''
 
     title = var('')
+    position = var((0, 0))
 
-    def __init__(self, title: str, content: Widget):
+    def __init__(self, title: str, content: Widget, *, position: tuple[int, int] = (10, 5)):
         super().__init__()
         self.title = title
         self.content = content
+        self.position = position
 
     def compose(self) -> ComposeResult:
         yield TitleBar(self)
@@ -125,6 +127,9 @@ class Window(Container):
     def watch_title(self, new: str) -> None:
         if self.is_mounted:
             self.query_one(TitleBar).title = new
+
+    def watch_position(self, new: tuple[int, int]):
+        self.styles.offset = new
 
     def on_mouse_down(self) -> None:
         # bring to front
