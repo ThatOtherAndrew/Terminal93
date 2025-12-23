@@ -105,7 +105,7 @@ class BootScreen(Screen):
         self.simulate_load()
 
     @work
-    async def simulate_load(self):
+    async def simulate_load(self) -> None:
         log = self.query_one(Static)
 
         await sleep(0.5)

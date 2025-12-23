@@ -47,7 +47,7 @@ class TitleBarButton(Button):
     }
     """
 
-    def __init__(self, action: WindowAction):
+    def __init__(self, action: WindowAction) -> None:
         super().__init__(label=action.value, compact=True)
         self.action = action
 
@@ -128,7 +128,7 @@ class Window(Container):
         content: Widget,
         *,
         position: tuple[int, int] = (10, 5),
-    ):
+    ) -> None:
         super().__init__()
         self.owner = owner
         self.title = title
@@ -143,7 +143,7 @@ class Window(Container):
         if self.is_mounted:
             self.query_one(TitleBar).title = new
 
-    def watch_position(self, new: tuple[int, int]):
+    def watch_position(self, new: tuple[int, int]) -> None:
         self.styles.offset = new
 
     def on_mouse_down(self) -> None:
