@@ -7,13 +7,13 @@ from terminal93.widgets.window import Window
 
 class Terminal93(App):
     # language=SCSS
-    CSS = '''
+    CSS = """
     #background {
         width: 100vw;
         height: 100vh;
         hatch: right $primary-background;
     }
-    '''
+    """
 
     def compose(self) -> ComposeResult:
         yield Static(id='background')

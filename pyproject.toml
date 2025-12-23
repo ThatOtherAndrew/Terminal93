@@ -11,10 +11,14 @@ dependencies = [
 [project.scripts]
 terminal93 = "terminal93.__main__:main"
 
+[dependency-groups]
+dev = [
+    "ruff>=0.14.10",
+    "textual-dev>=1.8.0",
+]
+
 [tool.uv]
 package = true
 
-[dependency-groups]
-dev = [
-    "textual-dev>=1.8.0",
-]
+[tool.ruff.format]
+quote-style = "single"

@@ -17,19 +17,19 @@ class WindowAction(Enum):
 
 class TitleLabel(Label):
     # language=SCSS
-    DEFAULT_CSS = '''
+    DEFAULT_CSS = """
     TitleLabel {
         width: 1fr;
         padding: 0 2;
     }
-    '''
+    """
 
     ALLOW_SELECT = False
 
 
 class TitleBarButton(Button):
     # language=SCSS
-    DEFAULT_CSS = '''
+    DEFAULT_CSS = """
     TitleBarButton.-style-default {
         max-width: 3;
         max-height: 1;
@@ -39,7 +39,7 @@ class TitleBarButton(Button):
             background: $primary-darken-3   ;
         }
     }
-    '''
+    """
 
     def __init__(self, action: WindowAction):
         super().__init__(label=action.value, compact=True)
@@ -48,7 +48,7 @@ class TitleBarButton(Button):
 
 class TitleBar(HorizontalGroup):
     # language=SCSS
-    DEFAULT_CSS = '''
+    DEFAULT_CSS = """
     TitleBar {
         height: 1;
         background: $primary;
@@ -65,7 +65,7 @@ class TitleBar(HorizontalGroup):
     HorizontalGroup {
         width: auto;
     }
-    '''
+    """
 
     is_dragging = var(False, toggle_class='dragging')
 
@@ -100,21 +100,24 @@ class TitleBar(HorizontalGroup):
         self.release_mouse()
         self.is_dragging = False
 
+
 class Window(Container):
     # language=CSS
-    DEFAULT_CSS = '''
+    DEFAULT_CSS = """
     Window {
         position: absolute;
         width: 40;
         height: 10;
         offset: 5 5;
     }
-    '''
+    """
 
     title = var('')
     position = var((0, 0))
 
-    def __init__(self, title: str, content: Widget, *, position: tuple[int, int] = (10, 5)):
+    def __init__(
+        self, title: str, content: Widget, *, position: tuple[int, int] = (10, 5)
+    ):
         super().__init__()
         self.title = title
         self.content = content

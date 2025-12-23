@@ -27,9 +27,9 @@ MMMMMMMMMM
 class LoadingBar(ProgressBar):
     # https://github.com/Textualize/textual/pull/5963
     class ThickBarRenderable(Bar):
-        HALF_BAR_LEFT = "▐"
-        BAR = "█"
-        HALF_BAR_RIGHT = "▌"
+        HALF_BAR_LEFT = '▐'
+        BAR = '█'
+        HALF_BAR_RIGHT = '▌'
 
     def __init__(self) -> None:
         super().__init__(show_percentage=False, show_eta=False)
@@ -38,7 +38,7 @@ class LoadingBar(ProgressBar):
 
 class Splash(Widget):
     # language=CSS
-    DEFAULT_CSS = '''
+    DEFAULT_CSS = """
     Static {
         width: auto;
     }
@@ -47,7 +47,7 @@ class Splash(Widget):
         width: 1fr;
         height: 1fr;
     }
-    '''
+    """
 
     def compose(self) -> ComposeResult:
         yield Static(classes='spacer')
@@ -62,7 +62,7 @@ class Splash(Widget):
 
 class BootScreen(Screen):
     # language=CSS
-    DEFAULT_CSS = '''
+    DEFAULT_CSS = """
     BootScreen {
         overflow: hidden;
     }
@@ -70,7 +70,7 @@ class BootScreen(Screen):
     #log {
         margin: 1 2;
     }
-    '''
+    """
 
     BINDINGS = [
         ('escape,enter', 'app.pop_screen', 'Skip boot screen'),
@@ -88,17 +88,17 @@ class BootScreen(Screen):
 
     def compose(self) -> ComposeResult:
         yield Static(
-            f'Terminal93 OS version {version('terminal93')}\n'
+            f'Terminal93 OS version {version("terminal93")}\n'
             f'(C) 1993 Andromeda Industries, Inc.\n'
             f'\n'
             f'Python ({platform.python_implementation()}) {sys.version}\n'
             f'Platform {platform.platform()}\n'
-            f'Terminal {os.environ.get('TERM', 'unknown')}\n'
+            f'Terminal {os.environ.get("TERM", "unknown")}\n'
             f'\n'
-            f'Textual:  v{version('textual')}\n'
-            f'Rich:     v{version('rich')}\n'
+            f'Textual:  v{version("textual")}\n'
+            f'Rich:     v{version("rich")}\n'
             f'\n',
-            id='log'
+            id='log',
         )
 
     def on_mount(self) -> None:
