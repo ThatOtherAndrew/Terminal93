@@ -1,4 +1,4 @@
-from terminal93.app import Terminal93
+from terminal93 import Terminal93
 
 
 def main() -> None:

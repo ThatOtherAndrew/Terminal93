@@ -1,11 +1,17 @@
-from enum import Enum
+from __future__ import annotations
 
-from textual import events
-from textual.app import ComposeResult
+from enum import Enum
+from typing import TYPE_CHECKING
+
 from textual.containers import Container, HorizontalGroup
 from textual.reactive import var
 from textual.widget import Widget
 from textual.widgets import Button, Label
+
+if TYPE_CHECKING:
+    from terminal93 import Application
+    from textual import events
+    from textual.app import ComposeResult
 
 
 class WindowAction(Enum):
@@ -116,9 +122,15 @@ class Window(Container):
     position = var((0, 0))
 
     def __init__(
-        self, title: str, content: Widget, *, position: tuple[int, int] = (10, 5)
+        self,
+        owner: Application,
+        title: str,
+        content: Widget,
+        *,
+        position: tuple[int, int] = (10, 5),
     ):
         super().__init__()
+        self.owner = owner
         self.title = title
         self.content = content
         self.position = position

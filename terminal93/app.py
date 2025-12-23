@@ -1,8 +1,16 @@
-from textual.app import App, ComposeResult
-from textual.widgets import Placeholder, Static
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+from textual import work
+from textual.app import App
+from textual.widgets import Static
 
 from terminal93.screens.BootScreen import BootScreen
-from terminal93.widgets.window import Window
+
+if TYPE_CHECKING:
+    from textual.app import ComposeResult
+    from terminal93 import Application
 
 
 class Terminal93(App):
@@ -15,15 +23,25 @@ class Terminal93(App):
     }
     """
 
+    def __init__(self) -> None:
+        super().__init__()
+        self.apps: list[Application] = []
+
     def compose(self) -> ComposeResult:
         yield Static(id='background')
 
-        for i in range(3):
-            yield Window(
-                f'Window {i + 1}',
-                Placeholder('Hello, World!'),
-                position=(10 + i * 4, 5 + i * 2),
-            )
+    @work
+    async def on_mount(self) -> None:
+        from terminal93.apps.counter import Counter
 
-    def on_mount(self) -> None:
-        self.push_screen(BootScreen())
+        self.install_app(Counter)
+
+        await self.push_screen_wait(BootScreen())
+
+        for app in self.apps:
+            app.launch()
+
+    def install_app(self, app: type[Application]) -> None:
+        app_instance = app(self)
+        app_instance.install()
+        self.apps.append(app(self))

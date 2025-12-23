@@ -73,7 +73,7 @@ class BootScreen(Screen):
     """
 
     BINDINGS = [
-        ('escape,enter', 'app.pop_screen', 'Skip boot screen'),
+        ('escape,enter', 'dismiss', 'Skip boot screen'),
     ]
 
     LINES = [
