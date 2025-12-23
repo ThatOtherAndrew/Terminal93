@@ -63,6 +63,10 @@ class Splash(Widget):
 class BootScreen(Screen):
     # language=CSS
     DEFAULT_CSS = '''
+    BootScreen {
+        overflow: hidden;
+    }
+    
     #log {
         margin: 1 2;
     }

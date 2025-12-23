@@ -1,19 +1,23 @@
 from textual.app import App, ComposeResult
-from textual.widgets import Placeholder
+from textual.widgets import Placeholder, Static
 
 from terminal93.screens.BootScreen import BootScreen
 from terminal93.widgets.window import Window
 
 
 class Terminal93(App):
-    # language=CSS
+    # language=SCSS
     CSS = '''
-    BootScreen {
-        overflow: hidden;
+    #background {
+        width: 100vw;
+        height: 100vh;
+        hatch: right $primary-background;
     }
     '''
 
     def compose(self) -> ComposeResult:
+        yield Static(id='background')
+
         for i in range(3):
             yield Window(f'Window {i + 1}', Placeholder('Hello, World!'))
 
