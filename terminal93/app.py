@@ -14,8 +14,8 @@ class Terminal93(App):
     '''
 
     def compose(self) -> ComposeResult:
-        for _ in range(3):
-            yield Window(Placeholder('Hello, World!'))
+        for i in range(3):
+            yield Window(f'Window {i + 1}', Placeholder('Hello, World!'))
 
     def on_mount(self) -> None:
         self.push_screen(BootScreen())

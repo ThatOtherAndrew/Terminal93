@@ -1,35 +1,84 @@
+from enum import Enum
+
 from textual import events
 from textual.app import ComposeResult
 from textual.containers import Container, HorizontalGroup
 from textual.reactive import var
 from textual.widget import Widget
+from textual.widgets import Button, Label
+
+
+class WindowAction(Enum):
+    MINIMISE = '🗕'
+    MAXIMISE = '🗖'
+    UNMAXIMISE = '🗗'
+    CLOSE = '🗙'
+
+
+class TitleLabel(Label):
+    # language=SCSS
+    DEFAULT_CSS = '''
+    TitleLabel {
+        width: 1fr;
+        padding: 0 2;
+    }
+    '''
+
+    ALLOW_SELECT = False
+
+
+class TitleBarButton(Button):
+    # language=SCSS
+    DEFAULT_CSS = '''
+    TitleBarButton.-style-default {
+        max-width: 3;
+        max-height: 1;
+        background: $primary;
+        
+        &:hover {
+            background: $primary-darken-3   ;
+        }
+    }
+    '''
+
+    def __init__(self, action: WindowAction):
+        super().__init__(label=action.value, compact=True)
+        self.action = action
 
 
 class TitleBar(HorizontalGroup):
-    is_dragging = var(False)
-
-    def __init__(self, window: Window) -> None:
-        super().__init__()
-        self.window = window
-
     # language=SCSS
     DEFAULT_CSS = '''
     TitleBar {
         height: 1;
         background: $primary;
-        
+
         &:hover {
             background: $primary-lighten-1;
         }
-      
+
         &.dragging {
-            background: $primary-darken-1;
+          background: $primary-darken-1;
         }
+    }
+    
+    HorizontalGroup {
+        width: auto;
     }
     '''
 
-    def watch_is_dragging(self, new: bool) -> None:
-        self.set_class(new, 'dragging')
+    is_dragging = var(False, toggle_class='dragging')
+
+    def __init__(self, window: Window) -> None:
+        super().__init__()
+        self.window = window
+
+    def compose(self) -> ComposeResult:
+        yield TitleLabel(self.window.title)
+        with HorizontalGroup():
+            yield TitleBarButton(WindowAction.MINIMISE)
+            yield TitleBarButton(WindowAction.MAXIMISE)
+            yield TitleBarButton(WindowAction.CLOSE)
 
     def on_mouse_down(self, event: events.MouseDown) -> None:
         # don't handle drag if not left-clicked
@@ -62,13 +111,20 @@ class Window(Container):
     }
     '''
 
-    def __init__(self, content: Widget):
+    title = var('')
+
+    def __init__(self, title: str, content: Widget):
         super().__init__()
+        self.title = title
         self.content = content
 
     def compose(self) -> ComposeResult:
         yield TitleBar(self)
         yield self.content
+
+    def watch_title(self, new: str) -> None:
+        if self.is_mounted:
+            self.query_one(TitleBar).title = new
 
     def on_mouse_down(self) -> None:
         # bring to front
