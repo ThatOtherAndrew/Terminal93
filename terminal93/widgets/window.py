@@ -39,7 +39,7 @@ class TitleBarButton(Button):
     TitleBarButton.-style-default {
         max-width: 3;
         max-height: 1;
-        background: $primary;
+        background: transparent;
         
         &:hover {
             background: $primary-darken-3   ;
@@ -114,7 +114,14 @@ class Window(Container):
         position: absolute;
         width: 40;
         height: 10;
-        offset: 5 5;
+        
+        * {
+            tint: black 25%;
+        }
+        
+        &.focused * {
+            tint: transparent;
+        }
     }
     """
 
@@ -151,3 +158,10 @@ class Window(Container):
         top_window = self.parent.children[-1]
         if top_window is not self:
             self.parent.move_child(self, after=top_window)
+
+        for window in self.parent.query('Window.focused'):
+            window.remove_class('focused')
+        self.add_class('focused')
+
+    def on_descendant_focus(self) -> None:
+        self.on_mouse_down()
