@@ -33,8 +33,10 @@ class Terminal93(App):
     @work
     async def on_mount(self) -> None:
         from terminal93.apps.counter import Counter
+        from terminal93.apps.welcome import Welcome
 
         self.install_app(Counter)
+        self.install_app(Welcome)
 
         await self.push_screen_wait(BootScreen())
 
