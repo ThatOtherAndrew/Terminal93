@@ -4,14 +4,14 @@ from enum import Enum
 from typing import TYPE_CHECKING
 
 from textual.containers import Container, HorizontalGroup
-from textual.reactive import var
+from textual.reactive import var, reactive
 from textual.widget import Widget
 from textual.widgets import Button, Label
 
 if TYPE_CHECKING:
     from terminal93 import Application
     from textual import events
-    from textual.app import ComposeResult
+    from textual.app import ComposeResult, RenderResult
 
 
 class WindowAction(Enum):
@@ -31,6 +31,11 @@ class TitleLabel(Label):
     """
 
     ALLOW_SELECT = False
+
+    title = reactive('')
+
+    def render(self) -> RenderResult:
+        return self.title
 
 
 class TitleBarButton(Button):
@@ -73,6 +78,7 @@ class TitleBar(HorizontalGroup):
     }
     """
 
+    title = var('')
     is_dragging = var(False, toggle_class='dragging')
 
     def __init__(self, window: Window) -> None:
@@ -80,7 +86,7 @@ class TitleBar(HorizontalGroup):
         self.window = window
 
     def compose(self) -> ComposeResult:
-        yield TitleLabel(self.window.title)
+        yield TitleLabel().data_bind(TitleBar.title)
         with HorizontalGroup():
             yield TitleBarButton(WindowAction.MINIMISE)
             yield TitleBarButton(WindowAction.MAXIMISE)
@@ -143,12 +149,8 @@ class Window(Container):
         self.position = position
 
     def compose(self) -> ComposeResult:
-        yield TitleBar(self)
+        yield TitleBar(self).data_bind(Window.title)
         yield self.content
-
-    def watch_title(self, new: str) -> None:
-        if self.is_mounted:
-            self.query_one(TitleBar).title = new
 
     def watch_position(self, new: tuple[int, int]) -> None:
         self.styles.offset = new
