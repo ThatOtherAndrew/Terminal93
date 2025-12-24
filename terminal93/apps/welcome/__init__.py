@@ -1,4 +1,5 @@
 from terminal93 import Application
+
 from .windows.welcome import MainWindow
 
 
@@ -7,4 +8,4 @@ class Welcome(Application):
     ICON = '🔢'
 
     def launch(self) -> None:
-        self.spawn_window(MainWindow(), 'Welcome!')
+        self.spawn_window(MainWindow)

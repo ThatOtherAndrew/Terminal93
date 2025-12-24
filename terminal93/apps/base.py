@@ -3,11 +3,8 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING
 
-from ..widgets.window import Window
-
 if TYPE_CHECKING:
-    from textual.widget import Widget
-    from terminal93 import Terminal93
+    from terminal93 import Terminal93, Window
 
 
 class Application(ABC):
@@ -21,14 +18,11 @@ class Application(ABC):
     def install(self) -> None:
         pass
 
-    def spawn_window(self, content: Widget, title: str | None = None) -> Window:
-        if title is None:
-            title = self.NAME
-
-        window = Window(self, title, content)
-        self.windows.append(window)
-        self.app.mount(window)
-        return window
+    def spawn_window(self, window: type[Window]) -> Window:
+        window_instance = window(self)
+        self.windows.append(window_instance)
+        self.app.mount(window_instance)
+        return window_instance
 
     @abstractmethod
     def launch(self) -> None:

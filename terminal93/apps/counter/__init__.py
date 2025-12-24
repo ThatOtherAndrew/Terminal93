@@ -1,4 +1,5 @@
 from terminal93 import Application
+
 from .windows.counter import MainWindow
 
 
@@ -7,4 +8,4 @@ class Counter(Application):
     ICON = '🔢'
 
     def launch(self) -> None:
-        self.spawn_window(MainWindow())
+        self.spawn_window(MainWindow)

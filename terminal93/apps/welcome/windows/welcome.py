@@ -1,6 +1,7 @@
 from textual.app import ComposeResult
-from textual.containers import CenterMiddle
 from textual.widgets import Markdown
+
+from terminal93 import Window
 
 # language=Markdown
 MESSAGE = """
@@ -10,6 +11,6 @@ The rest of this welcome message has yet to be written :>
 """
 
 
-class MainWindow(CenterMiddle):
-    def compose(self) -> ComposeResult:
+class MainWindow(Window):
+    def content(self) -> ComposeResult:
         yield Markdown(MESSAGE)

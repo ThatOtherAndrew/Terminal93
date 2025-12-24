@@ -4,14 +4,14 @@ from enum import Enum
 from typing import TYPE_CHECKING
 
 from textual.containers import Container, HorizontalGroup
-from textual.reactive import var, reactive
-from textual.widget import Widget
-from textual.widgets import Button, Label
+from textual.reactive import reactive, var
+from textual.widgets import Button, Label, Placeholder
 
 if TYPE_CHECKING:
-    from terminal93 import Application
     from textual import events
     from textual.app import ComposeResult, RenderResult
+
+    from terminal93 import Application
 
 
 class WindowAction(Enum):
@@ -131,26 +131,25 @@ class Window(Container):
     }
     """
 
-    title = var('')
+    title = var('Oops! No title')
     position = var((0, 0))
 
     def __init__(
         self,
         owner: Application,
-        title: str,
-        content: Widget,
         *,
         position: tuple[int, int] = (10, 5),
     ) -> None:
         super().__init__()
         self.owner = owner
-        self.title = title
-        self.content = content
         self.position = position
+
+    def content(self) -> ComposeResult:
+        yield Placeholder('<no content>')
 
     def compose(self) -> ComposeResult:
         yield TitleBar(self).data_bind(Window.title)
-        yield self.content
+        yield from self.content()
 
     def watch_position(self, new: tuple[int, int]) -> None:
         self.styles.offset = new
