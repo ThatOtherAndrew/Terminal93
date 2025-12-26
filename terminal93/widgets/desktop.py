@@ -1,3 +1,4 @@
+from textual import events
 from textual.app import ComposeResult
 from textual.containers import Center, CenterMiddle, Grid
 from textual.reactive import reactive
@@ -34,6 +35,8 @@ class DesktopApp(CenterMiddle, can_focus=True):
     }
     """
 
+    BINDINGS = [('enter', 'launch', 'Launch app')]
+
     def __init__(self, app: Application) -> None:
         super().__init__()
         self.target_app = app
@@ -43,6 +46,13 @@ class DesktopApp(CenterMiddle, can_focus=True):
             yield Placeholder()
         with Center():
             yield Label(self.target_app.NAME)
+
+    def action_launch(self) -> None:
+        self.target_app.launch()
+
+    def on_click(self, event: events.Click) -> None:
+        if event.chain == 2:
+            self.action_launch()
 
 
 class Desktop(Grid):
