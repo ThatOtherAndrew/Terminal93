@@ -1,6 +1,6 @@
 from textual import events
 from textual.app import ComposeResult
-from textual.containers import Center, CenterMiddle, Grid
+from textual.containers import CenterMiddle, Grid
 from textual.reactive import reactive
 from textual.widgets import Label, Placeholder
 
@@ -11,28 +11,42 @@ class DesktopApp(CenterMiddle, can_focus=True):
     # language=SCSS
     DEFAULT_CSS = """
     DesktopApp {
-        &, Center {
+        &, Label {
             hatch: right $primary-background;
         }
         
         &:hover {
             outline: $primary-background;
+            Label {
+                outline-left: $primary-background;
+                outline-right: $primary-background;
+            }
         }
         
         &:focus {
             outline: $primary;
+            Label {
+                outline-left: $primary;
+                outline-right: $primary;
+            }
         }
-    } 
-    
-    Center {
-        width: auto;
-        margin: 0 1;
     }
     
     Placeholder {
+        position: absolute;
+        offset: 3 1;
         width: 6;
         height: 3;
-        margin-bottom: 1;
+    }
+    
+    Label {
+        position: absolute;
+        offset: 0 5;
+        width: 12;
+        height: 1;
+        
+        text-align: center;
+        background: transparent;
     }
     """
 
@@ -43,10 +57,8 @@ class DesktopApp(CenterMiddle, can_focus=True):
         self.target_app = app
 
     def compose(self) -> ComposeResult:
-        with Center():
-            yield Placeholder()
-        with Center():
-            yield Label(self.target_app.NAME)
+        yield Placeholder()
+        yield Label(self.target_app.NAME)
 
     def action_launch(self) -> None:
         self.target_app.launch()
