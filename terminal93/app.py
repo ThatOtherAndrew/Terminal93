@@ -30,16 +30,14 @@ class Terminal93(App):
         from terminal93.apps.counter import Counter
         from terminal93.apps.welcome import Welcome
 
-        self.install_app(Welcome)
+        self.install_app(Welcome).launch()
         self.install_app(Counter)
 
         await self.push_screen_wait(BootScreen())
 
-        for app in self.apps:
-            app.launch()
-
-    def install_app(self, app: type[Application]) -> None:
+    def install_app(self, app: type[Application]) -> Application:
         app_instance = app(self)
         app_instance.install()
         self.apps.append(app(self))
         self.mutate_reactive(Terminal93.apps)
+        return app_instance
