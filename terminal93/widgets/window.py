@@ -4,6 +4,7 @@ from enum import Enum
 from typing import TYPE_CHECKING
 
 from textual.containers import Container, HorizontalGroup
+from textual.message import Message
 from textual.reactive import reactive, var
 from textual.widgets import Button, Label, Placeholder
 
@@ -52,9 +53,18 @@ class TitleBarButton(Button):
     }
     """
 
-    def __init__(self, action: WindowAction) -> None:
+    def __init__(self, window: Window, action: WindowAction) -> None:
         super().__init__(label=action.value, compact=True)
-        self.action = action
+        self.window = window
+        self.window_action = action
+
+    @staticmethod
+    def on_mouse_down(event: events.MouseDown) -> None:
+        event.stop()
+
+    def on_button_pressed(self) -> None:
+        if self.window_action == WindowAction.CLOSE:
+            self.post_message(Window.Close(self.window))
 
 
 class TitleBar(HorizontalGroup):
@@ -88,9 +98,9 @@ class TitleBar(HorizontalGroup):
     def compose(self) -> ComposeResult:
         yield TitleLabel().data_bind(TitleBar.title)
         with HorizontalGroup():
-            yield TitleBarButton(WindowAction.MINIMISE)
-            yield TitleBarButton(WindowAction.MAXIMISE)
-            yield TitleBarButton(WindowAction.CLOSE)
+            yield TitleBarButton(self.window, WindowAction.MINIMISE)
+            yield TitleBarButton(self.window, WindowAction.MAXIMISE)
+            yield TitleBarButton(self.window, WindowAction.CLOSE)
 
     def on_mouse_down(self, event: events.MouseDown) -> None:
         # don't handle drag if not left-clicked
@@ -131,6 +141,11 @@ class Window(Container):
     }
     """
 
+    class Close(Message):
+        def __init__(self, window: Window) -> None:
+            super().__init__()
+            self.window = window
+
     title = var('Oops! No title')
     position = var((0, 0))
 
@@ -166,3 +181,7 @@ class Window(Container):
 
     def on_descendant_focus(self) -> None:
         self.on_mouse_down()
+
+    def on_window_close(self, event: Window.Close) -> None:
+        event.stop()
+        self.owner.quit()
