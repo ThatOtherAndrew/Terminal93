@@ -4,39 +4,34 @@ from typing import TYPE_CHECKING
 
 from textual import work
 from textual.app import App
-from textual.widgets import Static
+from textual.reactive import var
 
 from terminal93.screens.BootScreen import BootScreen
+from terminal93.widgets.desktop import Desktop
 
 if TYPE_CHECKING:
     from textual.app import ComposeResult
+
     from terminal93 import Application
 
 
 class Terminal93(App):
-    # language=SCSS
-    CSS = """
-    #background {
-        width: 100vw;
-        height: 100vh;
-        hatch: right $primary-background;
-    }
-    """
+    apps: var[list[Application]] = var([])
 
     def __init__(self) -> None:
         super().__init__()
         self.apps: list[Application] = []
 
     def compose(self) -> ComposeResult:
-        yield Static(id='background')
+        yield Desktop().data_bind(Terminal93.apps)
 
     @work
     async def on_mount(self) -> None:
         from terminal93.apps.counter import Counter
         from terminal93.apps.welcome import Welcome
 
-        self.install_app(Counter)
         self.install_app(Welcome)
+        self.install_app(Counter)
 
         await self.push_screen_wait(BootScreen())
 
@@ -47,3 +42,4 @@ class Terminal93(App):
         app_instance = app(self)
         app_instance.install()
         self.apps.append(app(self))
+        self.mutate_reactive(Terminal93.apps)
