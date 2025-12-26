@@ -7,6 +7,7 @@ from textual.app import App
 from textual.reactive import var
 
 from terminal93.screens.BootScreen import BootScreen
+from terminal93.utils.achievements import Achievements
 from terminal93.widgets.desktop import Desktop
 
 if TYPE_CHECKING:
@@ -17,10 +18,12 @@ if TYPE_CHECKING:
 
 class Terminal93(App):
     apps: var[list[Application]] = var([])
+    achievements: var[Achievements] = var(None)
 
     def __init__(self) -> None:
         super().__init__()
         self.apps: list[Application] = []
+        self.achievements = Achievements(self)
 
     def compose(self) -> ComposeResult:
         yield Desktop().data_bind(Terminal93.apps)
@@ -34,6 +37,8 @@ class Terminal93(App):
         self.install_app(Counter)
 
         await self.push_screen_wait(BootScreen())
+
+        self.achievements.grant('hello_world')
 
     def install_app(self, app: type[Application]) -> Application:
         app_instance = app(self)
