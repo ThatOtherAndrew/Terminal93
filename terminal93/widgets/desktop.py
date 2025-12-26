@@ -16,16 +16,17 @@ class DesktopApp(CenterMiddle, can_focus=True):
         }
         
         &:hover {
-            border: $primary-background;
+            outline: $primary-background;
         }
         
         &:focus {
-            border: $primary;
+            outline: $primary;
         }
     } 
     
     Center {
         width: auto;
+        margin: 0 1;
     }
     
     Placeholder {
