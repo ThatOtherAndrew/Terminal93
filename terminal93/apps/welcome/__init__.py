@@ -1,6 +1,6 @@
 from terminal93 import Application
 
-from .windows.welcome import MainWindow
+from .windows.main_window import MainWindow
 
 
 class Welcome(Application):

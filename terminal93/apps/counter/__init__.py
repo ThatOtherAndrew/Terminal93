@@ -1,6 +1,6 @@
 from terminal93 import Application
 
-from .windows.counter import MainWindow
+from .windows.main_window import MainWindow
 
 
 class Counter(Application):
