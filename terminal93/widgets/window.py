@@ -137,7 +137,7 @@ class Window(Container):
             tint: black 25%;
         }
         
-        &.focused * {
+        &:focus-within * {
             tint: transparent;
         }
     }
@@ -165,6 +165,8 @@ class Window(Container):
         self.owner = owner
         self.position = position
 
+        self.can_focus = True
+
     @property
     def app(self) -> Terminal93:
         return cast('Terminal93', super().app)
@@ -180,21 +182,14 @@ class Window(Container):
     def watch_position(self, new: tuple[int, int]) -> None:
         self.styles.offset = new
 
-    def focus_window(self) -> None:
+    def on_focus(self) -> None:
         # bring to front
         top_window = self.parent.children[-1]
         if top_window is not self:
             self.parent.move_child(self, after=top_window)
 
-        for window in self.parent.query('Window.focused'):
-            window.remove_class('focused')
-        self.add_class('focused')
-
-    def on_mouse_down(self) -> None:
-        self.focus_window()
-
     def on_descendant_focus(self) -> None:
-        self.focus_window()
+        self.on_focus()
 
     def on_window_close(self, event: Window.Close) -> None:
         event.stop()

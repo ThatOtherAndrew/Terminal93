@@ -24,7 +24,7 @@ class Application(ABC):
         self.app.mount(window_instance)
 
         if focus:
-            window_instance.focus_window()
+            window_instance.focus()
 
         return window_instance
 
