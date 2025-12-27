@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 from textual.containers import Container, HorizontalGroup
 from textual.message import Message
@@ -12,7 +12,7 @@ if TYPE_CHECKING:
     from textual import events
     from textual.app import ComposeResult, RenderResult
 
-    from terminal93 import Application
+    from terminal93 import Application, Terminal93
 
 
 class WindowAction(Enum):
@@ -162,6 +162,10 @@ class Window(Container):
         super().__init__()
         self.owner = owner
         self.position = position
+
+    @property
+    def app(self) -> Terminal93:
+        return cast('Terminal93', super().app)
 
     def content(self) -> ComposeResult:
         yield Placeholder('<no content>')
