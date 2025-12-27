@@ -62,7 +62,9 @@ class TitleBarButton(Button):
     def on_mouse_down(event: events.MouseDown) -> None:
         event.stop()
 
-    def on_button_pressed(self) -> None:
+    def on_button_pressed(self, event: Button.Pressed) -> None:
+        event.stop()
+
         if self.window_action == WindowAction.CLOSE:
             self.post_message(Window.Close(self.window))
 
