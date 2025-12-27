@@ -12,6 +12,7 @@ if TYPE_CHECKING:
 
 
 class Achievement(TypedDict):
+    icon: str
     name: str
     description: str
     achieved: datetime | None
@@ -24,14 +25,7 @@ class Achievements(dict[str, Achievement]):
 
         with (files(resources) / 'achievements.toml').open('rb') as file:
             super().__init__(
-                (
-                    key,
-                    {
-                        'name': achievement['name'],
-                        'description': achievement['description'],
-                        'achieved': None,
-                    },
-                )
+                (key, {**achievement, 'achieved': None})
                 for key, achievement in tomllib.load(file).items()
             )
 

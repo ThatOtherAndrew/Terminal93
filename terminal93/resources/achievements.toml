@@ -1,15 +1,19 @@
 [hello_world]
+icon = "👋"
 name = "Hello, World!"
 description = "Launch Terminal93 for the first time."
 
 [where_cookies]
+icon = "🍪"
 name = "Where are the cookies?"
 description = "Click the counter button."
 
 [unfunny_number]
+icon = "🤨"
 name = "Unfunny number"
 description = "Click the button 67 times."
 
 [funny_number]
+icon = "🤣"
 name = "Funny number"
 description = "Click the button 69 times."

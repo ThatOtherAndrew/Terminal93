@@ -49,7 +49,7 @@ class TitleBarButton(Button):
         background: transparent;
         
         &:hover {
-            background: $primary-darken-3   ;
+            background: $primary-darken-3;
         }
     }
     """
