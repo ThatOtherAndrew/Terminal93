@@ -28,6 +28,7 @@ class TitleLabel(Label):
     TitleLabel {
         width: 1fr;
         padding: 0 2;
+        text-overflow: ellipsis;
     }
     """
 
@@ -130,8 +131,8 @@ class Window(Container):
     DEFAULT_CSS = """
     Window {
         position: absolute;
-        width: 40;
-        height: 10;
+        min-width: 15;
+        min-height: 1;
         
         * {
             tint: black 25%;
@@ -146,6 +147,9 @@ class Window(Container):
         padding: 1 2;
     }
     """
+
+    WIDTH = 40
+    HEIGHT = 10
 
     class Close(Message):
         def __init__(self, window: Window) -> None:
@@ -165,6 +169,8 @@ class Window(Container):
         self.owner = owner
         self.position = position
 
+        self.styles.width = self.WIDTH
+        self.styles.height = self.HEIGHT
         self.can_focus = True
 
     @property
