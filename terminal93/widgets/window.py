@@ -139,6 +139,10 @@ class Window(Container):
             tint: transparent;
         }
     }
+
+    #content {
+        padding: 1 2;
+    }
     """
 
     class Close(Message):
@@ -164,7 +168,8 @@ class Window(Container):
 
     def compose(self) -> ComposeResult:
         yield TitleBar(self).data_bind(Window.title)
-        yield from self.content()
+        with Container(id='content'):
+            yield from self.content()
 
     def watch_position(self, new: tuple[int, int]) -> None:
         self.styles.offset = new
