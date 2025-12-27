@@ -36,12 +36,14 @@ class Terminal93(App):
     @work
     async def on_mount(self) -> None:
         from terminal93.apps.achievements import Achievements
+        from terminal93.apps.chat import Chat
         from terminal93.apps.counter import Counter
         from terminal93.apps.welcome import Welcome
 
         self.install_app(Welcome).launch()
-        self.install_app(Counter)
         self.install_app(Achievements)
+        self.install_app(Counter)
+        self.install_app(Chat)
 
         await self.push_screen_wait(BootScreen())
 
