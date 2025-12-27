@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+import os
 from typing import TYPE_CHECKING
 
 from textual import work
 from textual.app import App
+from textual.features import parse_features
 from textual.reactive import var
 
 from terminal93.screens.BootScreen import BootScreen
@@ -21,7 +23,10 @@ class Terminal93(App):
     achievements: var[Achievements] = var(None)
 
     def __init__(self) -> None:
-        super().__init__()
+        css_path = None
+        if 'debug' in parse_features(os.getenv('TEXTUAL', '')):
+            css_path = 'resources/global.tcss'
+        super().__init__(css_path=css_path)
         self.apps: list[Application] = []
         self.achievements = Achievements(self)
 
@@ -30,9 +35,9 @@ class Terminal93(App):
 
     @work
     async def on_mount(self) -> None:
+        from terminal93.apps.achievements import Achievements
         from terminal93.apps.counter import Counter
         from terminal93.apps.welcome import Welcome
-        from terminal93.apps.achievements import Achievements
 
         self.install_app(Welcome).launch()
         self.install_app(Counter)
