@@ -11,7 +11,7 @@ class AchievementEntry(HorizontalGroup):
     AchievementEntry {
         height: 5;
     }
-        
+    
     #name {
         width: 8;
     }
