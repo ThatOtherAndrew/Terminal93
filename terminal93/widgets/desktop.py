@@ -7,17 +7,28 @@ from textual.widgets import Label, Placeholder
 from terminal93.apps.base import Application
 
 
+class AppLabel(Label):
+    # language=SCSS
+    DEFAULT_CSS = """
+    AppLabel {
+        text-align: center;
+    }
+    """
+
+    ALLOW_SELECT = False
+
+
 class DesktopApp(CenterMiddle, can_focus=True):
     # language=SCSS
     DEFAULT_CSS = """
     DesktopApp {
-        &, Label {
+        &, AppLabel {
             hatch: right $primary-background;
         }
         
         &:hover {
             outline: $primary-background;
-            Label {
+            AppLabel {
                 outline-left: $primary-background;
                 outline-right: $primary-background;
             }
@@ -25,7 +36,7 @@ class DesktopApp(CenterMiddle, can_focus=True):
         
         &:focus {
             outline: $primary;
-            Label {
+            AppLabel {
                 outline-left: $primary;
                 outline-right: $primary;
             }
@@ -39,14 +50,11 @@ class DesktopApp(CenterMiddle, can_focus=True):
         height: 3;
     }
     
-    Label {
+    AppLabel {
         position: absolute;
         offset: 0 5;
         width: 12;
         height: 1;
-        
-        text-align: center;
-        background: transparent;
     }
     """
 
@@ -58,7 +66,7 @@ class DesktopApp(CenterMiddle, can_focus=True):
 
     def compose(self) -> ComposeResult:
         yield Placeholder()
-        yield Label(self.target_app.NAME)
+        yield AppLabel(self.target_app.NAME)
 
     def action_launch(self) -> None:
         self.target_app.launch()
