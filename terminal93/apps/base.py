@@ -18,10 +18,14 @@ class Application(ABC):
     def install(self) -> None:
         pass
 
-    def spawn_window(self, window: type[Window]) -> Window:
+    def spawn_window(self, window: type[Window], focus: bool = True) -> Window:
         window_instance = window(self)
         self.windows.append(window_instance)
         self.app.mount(window_instance)
+
+        if focus:
+            window_instance.focus_window()
+
         return window_instance
 
     @abstractmethod

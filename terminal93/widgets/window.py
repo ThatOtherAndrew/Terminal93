@@ -178,7 +178,7 @@ class Window(Container):
     def watch_position(self, new: tuple[int, int]) -> None:
         self.styles.offset = new
 
-    def on_mouse_down(self) -> None:
+    def focus_window(self) -> None:
         # bring to front
         top_window = self.parent.children[-1]
         if top_window is not self:
@@ -188,8 +188,11 @@ class Window(Container):
             window.remove_class('focused')
         self.add_class('focused')
 
+    def on_mouse_down(self) -> None:
+        self.focus_window()
+
     def on_descendant_focus(self) -> None:
-        self.on_mouse_down()
+        self.focus_window()
 
     def on_window_close(self, event: Window.Close) -> None:
         event.stop()
