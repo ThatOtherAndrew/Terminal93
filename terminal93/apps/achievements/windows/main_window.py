@@ -27,5 +27,7 @@ class MainWindow(Window):
         def update(new: Achievements) -> None:
             self.title = f'Achievements: {new.achieved_count}/{len(new)}'
             self.query_one(AchievementProgressBar).progress = new.achieved_count
+            for entry in self.query(AchievementEntry):
+                entry.mutate_reactive(AchievementEntry.achievement)
 
         self.watch(self.app, 'achievements', update)
