@@ -20,6 +20,7 @@ class Achievement(TypedDict):
 class Achievements(dict[str, Achievement]):
     def __init__(self, app: Terminal93) -> None:
         self.app = app
+        self.achieved_count = 0
 
         with (files(resources) / 'achievements.toml').open('rb') as file:
             super().__init__(
@@ -40,6 +41,7 @@ class Achievements(dict[str, Achievement]):
             return
 
         achievement['achieved'] = datetime.now(UTC)
+        self.achieved_count += 1
         self.app.mutate_reactive(type(self.app).achievements)
 
         self.app.notify(
