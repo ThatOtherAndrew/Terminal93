@@ -17,5 +17,12 @@ class MainWindow(Window):
     def watch_count(self, new: int) -> None:
         self.title = f'Counter: {new}'
 
+        if new == 1:
+            self.app.achievements.grant('where_cookies')
+        elif new == 67:
+            self.app.achievements.grant('unfunny_number')
+        elif new == 69:
+            self.app.achievements.grant('funny_number')
+
     def on_button_pressed(self) -> None:
         self.count += 1

@@ -1,3 +1,15 @@
 [hello_world]
 name = "Hello, World!"
 description = "Launch Terminal93 for the first time."
+
+[where_cookies]
+name = "Where are the cookies?"
+description = "Click the counter button."
+
+[unfunny_number]
+name = "Unfunny number"
+description = "Click the button 67 times."
+
+[funny_number]
+name = "Funny number"
+description = "Click the button 69 times."
