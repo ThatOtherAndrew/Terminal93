@@ -9,11 +9,28 @@ class AchievementProgressBar(HorizontalGroup):
     DEFAULT_CSS = """
     AchievementProgressBar {
         margin-bottom: 1;
+        
+        ProgressBar Bar {
+            width: 1fr;
+            
+            .bar--bar {
+                color: $success;
+            }
+            
+            .bar--complete {
+                color: $warning;
+            }
+        }
     }
     """
 
     progress = var(0)
     total = var(0)
+
+    def __init__(self, progress: int, total: int) -> None:
+        super().__init__()
+        self.progress = progress
+        self.total = total
 
     def compose(self) -> ComposeResult:
         yield ProgressBar(show_eta=False).data_bind(

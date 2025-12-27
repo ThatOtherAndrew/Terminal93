@@ -8,10 +8,16 @@ from ..widgets.progress import AchievementProgressBar
 
 
 class MainWindow(Window):
+    WIDTH = 60
+    HEIGHT = 25
+
     app: Terminal93
 
     def content(self) -> ComposeResult:
-        yield AchievementProgressBar()
+        yield AchievementProgressBar(
+            self.app.achievements.achieved_count, len(self.app.achievements)
+        )
+
         with VerticalScroll():
             for achievement in self.app.achievements.values():
                 yield AchievementEntry(achievement)
