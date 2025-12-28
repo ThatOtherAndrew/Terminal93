@@ -111,7 +111,7 @@ class Desktop(Grid):
     } 
     """
 
-    apps: reactive[list[Application]] = reactive([], recompose=True)
+    apps: reactive[dict[str, Application]] = reactive({}, recompose=True)
 
     def compose(self) -> ComposeResult:
-        yield from map(DesktopApp, self.apps)
+        yield from map(DesktopApp, self.apps.values())
