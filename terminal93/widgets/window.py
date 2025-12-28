@@ -148,9 +148,9 @@ class Window(Container):
     }
     """
 
+    TITLE: str | None = None
     WIDTH = 40
     HEIGHT = 10
-    TITLE: str | None = None
 
     class Close(Message):
         def __init__(self, window: Window) -> None:
