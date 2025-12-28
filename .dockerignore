@@ -1,0 +1,5 @@
+**/*
+!terminal93
+!pyproject.toml
+!uv.lock
+!.python-version
