@@ -150,13 +150,14 @@ class Window(Container):
 
     WIDTH = 40
     HEIGHT = 10
+    TITLE: str | None = None
 
     class Close(Message):
         def __init__(self, window: Window) -> None:
             super().__init__()
             self.window = window
 
-    title = var('Oops! No title')
+    title = var('')
     position = var((0, 0))
 
     def __init__(
@@ -168,6 +169,7 @@ class Window(Container):
         super().__init__()
         self.owner = owner
         self.position = position
+        self.title = self.owner.NAME if self.TITLE is None else self.TITLE
 
         self.styles.width = self.WIDTH
         self.styles.height = self.HEIGHT

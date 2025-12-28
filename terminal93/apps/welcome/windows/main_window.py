@@ -12,5 +12,7 @@ Terminal93 is a lil fantasy desktop inspired by the likes of [WINDOWS93](https:/
 
 
 class MainWindow(Window):
+    TITLE = 'Welcome!'
+
     def content(self) -> ComposeResult:
         yield Markdown(MESSAGE)
