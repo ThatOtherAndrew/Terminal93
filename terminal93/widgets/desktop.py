@@ -7,6 +7,24 @@ from textual.widgets import Label, Placeholder
 from terminal93.apps.base import Application
 
 
+class AppIcon(Placeholder):
+    # language=SCSS
+    DEFAULT_CSS = """
+    AppIcon {
+        text-align: center;
+    }
+    """
+
+    ALLOW_SELECT = False
+
+    def __init__(self, icon: str) -> None:
+        super().__init__(icon)
+
+    @staticmethod
+    def on_click(event: events.Click) -> None:
+        event.prevent_default()
+
+
 class AppLabel(Label):
     # language=SCSS
     DEFAULT_CSS = """
@@ -65,7 +83,7 @@ class DesktopApp(CenterMiddle, can_focus=True):
         self.target_app = app
 
     def compose(self) -> ComposeResult:
-        yield Placeholder()
+        yield AppIcon(self.target_app.ICON)
         yield AppLabel(self.target_app.NAME)
 
     def action_launch(self) -> None:
