@@ -4,7 +4,7 @@ from textual.widgets import Label, Select
 from terminal93 import Terminal93, Window
 
 
-class MainWindow(Window):
+class ThemesWindow(Window):
     WIDTH = 40
     HEIGHT = 8
 

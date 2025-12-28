@@ -8,7 +8,7 @@ from socketio import AsyncClient
 from . import events, types
 
 if TYPE_CHECKING:
-    from ..windows.main_window import MainWindow
+    from ..windows.main_window import ChatWindow
 
 
 def html_unescape(data: dict[str, object]) -> dict[str, object]:
@@ -24,7 +24,7 @@ def html_unescape(data: dict[str, object]) -> dict[str, object]:
 class Client(AsyncClient):
     URL = 'ws://www.windows93.net:8081'
 
-    def __init__(self, window: MainWindow) -> None:
+    def __init__(self, window: ChatWindow) -> None:
         super().__init__()
         self.window = window
 

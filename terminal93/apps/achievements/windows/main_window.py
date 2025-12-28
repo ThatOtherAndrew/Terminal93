@@ -8,7 +8,7 @@ from ..widgets.achievement import AchievementEntry
 from ..widgets.progress import AchievementProgressBar
 
 
-class MainWindow(Window):
+class AchievementsWindow(Window):
     WIDTH = 60
     HEIGHT = 25
 

@@ -1,6 +1,6 @@
 from terminal93 import Application
 
-from .windows.main_window import MainWindow
+from .windows.main_window import ThemesWindow
 
 
 class Themes(Application):
@@ -8,4 +8,4 @@ class Themes(Application):
     ICON = '🎨'
 
     def launch(self) -> None:
-        self.spawn_window(MainWindow)
+        self.spawn_window(ThemesWindow)

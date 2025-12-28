@@ -7,12 +7,12 @@ from terminal93 import Window
 from ..widgets.button import CounterButton
 
 
-class MainWindow(Window):
+class CounterWindow(Window):
     count = var(0)
 
     def content(self) -> ComposeResult:
         with CenterMiddle():
-            yield CounterButton().data_bind(MainWindow.count)
+            yield CounterButton().data_bind(CounterWindow.count)
 
     def watch_count(self, new: int) -> None:
         self.title = f'Counter: {new}'

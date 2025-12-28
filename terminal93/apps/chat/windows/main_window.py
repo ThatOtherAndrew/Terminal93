@@ -14,7 +14,7 @@ from ..widgets.chat_input import ChatInput
 from ..widgets.sidebar import Sidebar
 
 
-class MainWindow(Window):
+class ChatWindow(Window):
     app: Terminal93
 
     WIDTH = 70
@@ -27,10 +27,10 @@ class MainWindow(Window):
         super().__init__(*args, **kwargs)
         self.client = Client(self)
         random_nick = f'term93_{random.randint(1, 999):03}'
-        self.set_reactive(MainWindow.nick, random_nick)
+        self.set_reactive(ChatWindow.nick, random_nick)
 
     def content(self) -> ComposeResult:
-        yield Sidebar().data_bind(MainWindow.users)
+        yield Sidebar().data_bind(ChatWindow.users)
         yield RichLog(min_width=1, wrap=True)
         yield ChatInput()
 
