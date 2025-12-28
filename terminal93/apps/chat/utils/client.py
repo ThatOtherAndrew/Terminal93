@@ -10,19 +10,7 @@ if TYPE_CHECKING:
 
 
 class Client(AsyncClient):
-    URL = 'http://www.windows93.net:8081'
-    HEADERS = {
-        'Accept': '*/*',
-        'Accept-Encoding': 'identity',
-        'Accept-Language': '*',
-        'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive',
-        'Host': 'www.windows93.net',
-        'Origin': 'https://www.windows93.net',
-        'Pragma': 'no-cache',
-        'Referer': 'https://www.windows93.net/trollbox/index.php',
-        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36',
-    }
+    URL = 'ws://www.windows93.net:8081'
 
     def __init__(self, window: MainWindow) -> None:
         super().__init__()
@@ -36,7 +24,7 @@ class Client(AsyncClient):
         self.on('update users', self.on_update_users)
 
     async def start_connection(self) -> None:
-        await self.connect(self.URL, self.HEADERS)
+        await self.connect(self.URL)
 
     async def on_connect(self) -> None:
         await self.emit('user joined', ('AndromedaClient', '', '', ''))
