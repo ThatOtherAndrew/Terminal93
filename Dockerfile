@@ -27,4 +27,4 @@ COPY --from=builder --chown=app:app /app/.venv /app/.venv
 
 # Run the application
 EXPOSE 8000
-CMD ["/app/.venv/bin/terminal93", "--serve"]
+CMD ["/app/.venv/bin/terminal93", "--serve", "https://terminal93.fly.dev"]

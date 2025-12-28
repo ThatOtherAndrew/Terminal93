@@ -6,10 +6,17 @@ from terminal93 import Terminal93
 
 
 def main() -> None:
-    if '--serve' in sys.argv:
-        Server('terminal93', host='0.0.0.0').serve()
-    else:
-        Terminal93().run()
+    match sys.argv:
+        case ['--serve', public_url]:
+            Server(
+                'terminal93',
+                host='0.0.0.0',
+                port=8000,
+                title='Terminal93',
+                public_url=public_url,
+            ).serve()
+        case _:
+            Terminal93().run()
 
 
 if __name__ == '__main__':
