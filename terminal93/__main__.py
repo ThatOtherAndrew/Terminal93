@@ -7,9 +7,9 @@ from terminal93 import Terminal93
 
 def main() -> None:
     match sys.argv:
-        case [_, '--serve', public_url]:
+        case [command, '--serve', public_url]:
             Server(
-                'terminal93',
+                command,
                 host='0.0.0.0',
                 port=8000,
                 title='Terminal93',
