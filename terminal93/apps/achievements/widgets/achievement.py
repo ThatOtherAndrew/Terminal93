@@ -1,7 +1,7 @@
 from textual.app import ComposeResult
 from textual.containers import HorizontalGroup, VerticalGroup
 from textual.reactive import var
-from textual.widgets import Label, Static
+from textual.widgets import Label
 
 from terminal93.utils.achievements import Achievement
 
@@ -39,7 +39,6 @@ class AchievementEntry(HorizontalGroup):
     
     #icon {
         box-sizing: content-box;
-        width: auto;
         background: $panel;
         border: block $panel;
         margin-right: 2;
@@ -51,7 +50,7 @@ class AchievementEntry(HorizontalGroup):
     }
     
     #description {
-    
+        color: $text-muted;
     }
     
     VerticalGroup {
@@ -67,7 +66,7 @@ class AchievementEntry(HorizontalGroup):
         self.can_focus = True
 
     def compose(self) -> ComposeResult:
-        yield Static(self.achievement['icon'], id='icon')
+        yield Label(id='icon')
         with VerticalGroup():
             yield Label(self.achievement['name'], id='name')
             yield Label(self.achievement['description'], id='description')
@@ -75,5 +74,14 @@ class AchievementEntry(HorizontalGroup):
     def watch_achievement(self, new: Achievement) -> None:
         achieved = new['achieved']
         self.set_class(bool(achieved), 'achieved')
+        self.query_one('#icon', Label).content = (
+            '❓' if new['secret'] and not achieved else new['icon']
+        )
+        self.query_one('#description', Label).content = (
+            'This is a secret achievement!'
+            if new['secret'] and not achieved
+            else new['description']
+        )
+
         if achieved:
             self.border_subtitle = f'Achieved {achieved.strftime("%H:%M")}'

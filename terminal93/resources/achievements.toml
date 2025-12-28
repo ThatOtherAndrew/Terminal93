@@ -17,3 +17,9 @@ description = "Click the button 67 times."
 icon = "🤣"
 name = "Funny number"
 description = "Click the button 69 times."
+
+[warm_welcome]
+icon = "🔗"
+name = "A warm welcome"
+description = "Click the secret link in the Welcome app."
+secret = true

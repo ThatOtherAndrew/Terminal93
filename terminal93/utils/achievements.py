@@ -15,6 +15,7 @@ class Achievement(TypedDict):
     icon: str
     name: str
     description: str
+    secret: bool
     achieved: datetime | None
 
 
@@ -25,7 +26,7 @@ class Achievements(dict[str, Achievement]):
 
         with (files(resources) / 'achievements.toml').open('rb') as file:
             super().__init__(
-                (key, {**achievement, 'achieved': None})
+                (key, {'secret': False, **achievement, 'achieved': None})
                 for key, achievement in tomllib.load(file).items()
             )
 
