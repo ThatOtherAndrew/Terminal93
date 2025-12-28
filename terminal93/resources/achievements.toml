@@ -3,6 +3,11 @@ icon = "👋"
 name = "Hello, World!"
 description = "Launch Terminal93 for the first time."
 
+[chatterbox]
+icon = "🗣️"
+name = "Chatterbox"
+description = "Send a live chat message."
+
 [where_cookies]
 icon = "🍪"
 name = "Where are the cookies?"
@@ -22,4 +27,10 @@ description = "Click the button 69 times."
 icon = "🔗"
 name = "A warm welcome"
 description = "Click the secret link in the Welcome app."
+secret = true
+
+[magic_word]
+icon = "🪄"
+name = "What's the magic word?"
+description = "Say \"please\" or \"thank you\" in the chat."
 secret = true

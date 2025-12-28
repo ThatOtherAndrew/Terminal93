@@ -5,7 +5,7 @@ from textual.app import ComposeResult
 from textual.reactive import var
 from textual.widgets import RichLog
 
-from terminal93 import Window
+from terminal93 import Terminal93, Window
 
 from ..utils import events
 from ..utils.client import Client
@@ -15,6 +15,8 @@ from ..widgets.sidebar import Sidebar
 
 
 class MainWindow(Window):
+    app: Terminal93
+
     WIDTH = 70
     HEIGHT = 30
 
@@ -41,6 +43,11 @@ class MainWindow(Window):
 
     async def on_chat_input_submitted(self, event: ChatInput.Submitted) -> None:
         await self.client.send(event.value)
+        self.app.achievements.grant('chatterbox')
+        if any(
+            magic_word in event.value.lower() for magic_word in ('please', 'thank you')
+        ):
+            self.app.achievements.grant('magic_word')
 
     def on_connected(self) -> None:
         self.title = 'Chat - Connected'
