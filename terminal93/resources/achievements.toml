@@ -23,6 +23,11 @@ icon = "🤣"
 name = "Funny number"
 description = "Click the button 69 times."
 
+[stylish]
+icon = "🎨"
+name = "Stylish"
+description = "Change the Windows93 UI theme."
+
 [warm_welcome]
 icon = "🔗"
 name = "A warm welcome"

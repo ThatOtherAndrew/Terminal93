@@ -77,6 +77,10 @@ class TitleBar(HorizontalGroup):
         height: 1;
         background: $primary;
 
+        * {
+            color: $text;
+        }
+
         &:hover {
             background: $primary-lighten-1;
         }
