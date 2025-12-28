@@ -1,3 +1,7 @@
+[build-system]
+requires = ["uv_build"]
+build-backend = "uv_build"
+
 [project]
 name = "terminal93"
 version = "0.1.0"
@@ -19,8 +23,9 @@ dev = [
     "textual-dev>=1.8.0",
 ]
 
-[tool.uv]
-package = true
+[tool.uv.build-backend]
+module-name = "terminal93"
+module-root = ""
 
 [tool.ruff.lint]
 select = ["E4", "E7", "E9", "F", "ANN"]
