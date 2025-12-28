@@ -4,6 +4,14 @@ from textual.widgets import TextArea
 
 
 class ChatInput(TextArea):
+    # language=SCSS
+    DEFAULT_CSS = """
+    ChatInput {
+        height: auto;
+        max-height: 10;
+    }
+    """
+
     BINDINGS = [('shift+enter', 'newline', 'New line')]
 
     class Submitted(Message):
