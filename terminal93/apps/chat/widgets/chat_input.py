@@ -9,6 +9,7 @@ class ChatInput(TextArea):
     ChatInput {
         height: auto;
         max-height: 10;
+        margin: 1 1 0 0;
     }
     """
 
@@ -20,7 +21,7 @@ class ChatInput(TextArea):
             self.value = value
 
     def __init__(self) -> None:
-        super().__init__(placeholder='Send a message...')
+        super().__init__(highlight_cursor_line=False, placeholder='Send a message...')
 
     async def action_newline(self) -> None:
         await self._on_key(events.Key('enter', '\r'))

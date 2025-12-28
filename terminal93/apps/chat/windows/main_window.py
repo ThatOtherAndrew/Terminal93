@@ -23,7 +23,7 @@ class MainWindow(Window):
 
     def content(self) -> ComposeResult:
         yield Sidebar().data_bind(MainWindow.users)
-        yield RichLog(wrap=True)
+        yield RichLog(min_width=1, wrap=True)
         yield ChatInput()
 
     def on_mount(self) -> None:
@@ -38,6 +38,7 @@ class MainWindow(Window):
 
     def on_connected(self) -> None:
         self.title = 'Chat - Connected'
+        self.query_one(Sidebar).loading = False
 
     def on_user_joined(self, event: events.UserJoined) -> None:
         self.query_one(RichLog).write('User joined: ' + event.user.nick)
