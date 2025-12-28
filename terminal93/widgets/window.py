@@ -127,7 +127,7 @@ class TitleBar(HorizontalGroup):
 
 
 class Window(Container):
-    # language=CSS
+    # language=SCSS
     DEFAULT_CSS = """
     Window {
         position: absolute;

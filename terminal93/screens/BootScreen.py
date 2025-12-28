@@ -11,7 +11,7 @@ from textual.containers import Center
 from textual.renderables.bar import Bar
 from textual.screen import Screen
 from textual.widget import Widget
-from textual.widgets import Static, ProgressBar
+from textual.widgets import ProgressBar, Static
 
 LOGO = r'''
 M""""""""M                              oo                   dP .d888b. d8888b.
@@ -25,6 +25,13 @@ MMMMMMMMMM
 
 
 class LoadingBar(ProgressBar):
+    # language=SCSS
+    DEFAULT_CSS = """
+    Bar > .bar--indeterminate {
+        color: $primary !important;
+    }
+    """
+
     # https://github.com/Textualize/textual/pull/5963
     class ThickBarRenderable(Bar):
         HALF_BAR_LEFT = '▐'
@@ -37,7 +44,7 @@ class LoadingBar(ProgressBar):
 
 
 class Splash(Widget):
-    # language=CSS
+    # language=SCSS
     DEFAULT_CSS = """
     Static {
         width: auto;
@@ -61,7 +68,7 @@ class Splash(Widget):
 
 
 class BootScreen(Screen):
-    # language=CSS
+    # language=SCSS
     DEFAULT_CSS = """
     BootScreen {
         overflow: hidden;
