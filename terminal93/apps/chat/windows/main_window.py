@@ -1,3 +1,5 @@
+import random
+
 from rich.text import Text
 from textual.app import ComposeResult
 from textual.reactive import var
@@ -17,10 +19,13 @@ class MainWindow(Window):
     HEIGHT = 30
 
     users: var[list[User]] = var([])
+    nick: var[str] = var('')
 
     def __init__(self, *args: object, **kwargs: object) -> None:
         super().__init__(*args, **kwargs)
         self.client = Client(self)
+        random_nick = f'term93_{random.randint(1, 999):03}'
+        self.set_reactive(MainWindow.nick, random_nick)
 
     def content(self) -> ComposeResult:
         yield Sidebar().data_bind(MainWindow.users)

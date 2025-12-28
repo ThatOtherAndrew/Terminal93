@@ -39,7 +39,7 @@ class Client(AsyncClient):
         await self.connect(self.URL)
 
     async def on_connect(self) -> None:
-        await self.emit('user joined', ('AndromedaClient', '', '', ''))
+        await self.emit('user joined', (self.window.nick, '', '', ''))
 
     async def on_ready(self) -> None:
         self.window.post_message(events.Connected())
