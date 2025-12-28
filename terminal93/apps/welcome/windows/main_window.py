@@ -7,7 +7,7 @@ from terminal93 import Window
 MESSAGE = """
 # Welcome to Terminal93!
 
-The rest of this welcome message has yet to be written :>
+Terminal93 is a lil fantasy desktop inspired by the likes of [WINDOWS93](https://www.windows93.net/)
 """
 
 

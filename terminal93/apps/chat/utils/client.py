@@ -3,7 +3,8 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from socketio import AsyncClient
-from textual.widgets import RichLog
+
+from . import events, types
 
 if TYPE_CHECKING:
     from ..windows.main_window import MainWindow
@@ -30,15 +31,21 @@ class Client(AsyncClient):
         await self.emit('user joined', ('AndromedaClient', '', '', ''))
 
     async def on_ready(self) -> None:
-        self.window.notify('Connected to server')
+        self.window.post_message(events.Connected())
 
     async def on_user_join(self, data: dict) -> None:
-        self.window.query_one(RichLog).write(data)
+        user = types.User(None, **data)
+        self.window.post_message(events.UserJoined(user))
 
     async def on_user_leave(self, data: dict) -> None:
-        self.window.query_one(RichLog).write(data)
+        user = types.User(None, **data)
+        self.window.post_message(events.UserLeft(user))
 
     async def on_message(self, data: dict) -> None:
-        self.window.query_one(RichLog).write(data)
+        message = types.Message(**data)
+        self.window.post_message(events.ChatMessage(message))
 
-    async def on_update_users(self, data: dict) -> None: ...
+    async def on_update_users(self, data: dict) -> None:
+        self.window.users = [
+            types.User(sid, **user_data) for sid, user_data in data.items()
+        ]
