@@ -1,3 +1,4 @@
+from rich.text import Text
 from textual.app import ComposeResult
 from textual.reactive import var
 from textual.widgets import RichLog
@@ -41,13 +42,18 @@ class MainWindow(Window):
         self.query_one(Sidebar).loading = False
 
     def on_user_joined(self, event: events.UserJoined) -> None:
-        self.query_one(RichLog).write('User joined: ' + event.user.nick)
+        msg = Text('User joined: ', 'dim') + event.user.colour_nick()
+        self.query_one(RichLog).write(msg)
 
     def on_user_left(self, event: events.UserLeft) -> None:
-        self.query_one(RichLog).write('User left: ' + event.user.nick)
+        msg = Text('User left: ', 'dim') + event.user.colour_nick()
+        self.query_one(RichLog).write(msg)
 
     def on_chat_message(self, event: events.ChatMessage) -> None:
-        self.query_one(RichLog).write(f'{event.message.nick}: {event.message.msg}')
+        msg = Text.assemble(
+            event.message.colour_nick(), (': ', 'dim'), event.message.msg
+        )
+        self.query_one(RichLog).write(msg)
 
     async def connect(self) -> None:
         await self.client.start_connection()

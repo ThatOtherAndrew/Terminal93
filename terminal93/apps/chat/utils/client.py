@@ -4,7 +4,6 @@ import html
 from typing import TYPE_CHECKING
 
 from socketio import AsyncClient
-from textual.widgets import RichLog
 
 from . import events, types
 
@@ -35,7 +34,6 @@ class Client(AsyncClient):
         self.on('user joined', self.on_user_join)
         self.on('user left', self.on_user_leave)
         self.on('update users', self.on_update_users)
-        self.on('*', self.on_unknown_event)
 
     async def start_connection(self) -> None:
         await self.connect(self.URL)
@@ -63,6 +61,3 @@ class Client(AsyncClient):
             types.User(sid, **html_unescape(user_data))
             for sid, user_data in data.items()
         ]
-
-    async def on_unknown_event(self, event: str, data: dict) -> None:
-        self.window.query_one(RichLog).write(f'Unknown event: {event}\n{data}')

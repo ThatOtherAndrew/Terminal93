@@ -33,4 +33,4 @@ class Sidebar(VerticalScroll):
 
     def compose(self) -> ComposeResult:
         for user in self.users:
-            yield Label(user.nick)
+            yield Label(user.colour_nick())
