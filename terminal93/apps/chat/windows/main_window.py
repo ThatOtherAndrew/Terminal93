@@ -2,6 +2,7 @@ import random
 import re
 from importlib.resources import files
 
+from better_profanity import profanity
 from rich.text import Text
 from textual.app import ComposeResult
 from textual.reactive import var
@@ -86,4 +87,4 @@ class ChatWindow(Window):
             domain = match.group(1)
             if any(domain.endswith(nsfw) for nsfw in self.nsfw_domains):
                 message = message.replace(url, '[[HYPERLINK BLOCKED]]')
-        return message
+        return profanity.censor(message)
